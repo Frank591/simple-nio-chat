@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS} [%p] [%c{1}] [%t(%tid)] %msg%n"/>
+        </Console>
+        <RollingFile name="RollingFile" fileName="logs/client.log"
+                     filePattern="logs/$${date:yyyy-MM}/client-%d{MM-dd-yyyy}-%i.log.zip">
+            <PatternLayout>
+                <Pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%p] [%c{1}] [%t(%tid)] %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+        </RollingFile>
+        <Async name="Async">
+            <AppenderRef ref="RollingFile"/>
+        </Async>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="Async"/>
+        </Root>
+    </Loggers>
+</Configuration>
